@@ -1,0 +1,96 @@
+plugins {
+    id 'scala'
+    id 'idea'
+    id 'java-library'
+    id 'application'
+    id 'maven-publish'
+    id 'signing'
+}
+
+group "com.lyrieek"
+description "Log viewer in browser"
+version '0.0.2'//-SNAPSHOT
+
+sourceCompatibility = JavaVersion.VERSION_12
+
+sourceSets.main.scala {
+    srcDirs = ['src/main/scala']
+}
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allJava
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://maven.aliyun.com/repository/public/'
+    }
+    maven {
+        url 'https://maven.aliyun.com/repository/spring/'
+    }
+    maven {
+        url "https://plugins.gradle.org/m2/"
+    }
+}
+
+dependencies {
+    implementation group: 'org.scala-lang', name: 'scala-library', version: '2.13.4'
+    implementation group: 'org.scala-lang', name: 'scala-compiler', version: '2.13.4'
+
+    implementation group: 'org.scalatra', name: 'scalatra_2.13', version: '2.7.1'
+    implementation group: 'org.eclipse.jetty', name: 'jetty-webapp', version: '10.0.0'
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
+    testImplementation 'junit:junit:4.12'
+}
+
+//java {
+//    withJavadocJar()
+//    withSourcesJar()
+//}
+
+publishing {
+    repositories {
+        maven {
+//            def releasesRepoUrl = "$buildDir/repos/releases"
+//            def snapshotsRepoUrl = "$buildDir/repos/snapshots"
+//            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+            credentials {
+                username ossrhUsername
+                password ossrhPassword
+            }
+        }
+    }
+    publications {
+        mavenJava(MavenPublication) {
+            pom {
+                name = 'Log Viewer'
+                description = 'Log viewer in browser'
+                url = 'http://www.lyrieek.com/library'
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'lyrieek'
+                        name = 'lyrieek cn'
+                        email = 'lyrieek@qq.com'
+                    }
+                }
+                scm {
+                    connection = 'https://github.com/lyrieek/log-viewer'
+                    developerConnection = 'scm:git:git://github.com/lyrieek/log-viewer.git'
+                    url = 'scm:git:ssh://git@github.com:lyrieek/log-viewer.git'
+                }
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.mavenJava
+}
