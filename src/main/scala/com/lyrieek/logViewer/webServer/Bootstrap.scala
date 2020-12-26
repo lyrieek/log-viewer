@@ -1,4 +1,4 @@
-package com.lyrieek.logViewer
+package com.lyrieek.logViewer.webServer
 
 object Bootstrap extends App {
 

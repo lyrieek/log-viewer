@@ -12,6 +12,7 @@ description "Log viewer in browser"
 version '0.0.2'//-SNAPSHOT
 
 sourceCompatibility = JavaVersion.VERSION_12
+targetCompatibility = JavaVersion.VERSION_12
 
 sourceSets.main.scala {
     srcDirs = ['src/main/scala']
@@ -38,10 +39,17 @@ dependencies {
     implementation group: 'org.scala-lang', name: 'scala-library', version: '2.13.4'
     implementation group: 'org.scala-lang', name: 'scala-compiler', version: '2.13.4'
 
+    implementation group: 'commons-io', name: 'commons-io', version: '2.8.0'
+
     implementation group: 'org.scalatra', name: 'scalatra_2.13', version: '2.7.1'
     implementation group: 'org.eclipse.jetty', name: 'jetty-webapp', version: '10.0.0'
-    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
-    testImplementation 'junit:junit:4.12'
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.8.0-beta4'
+    implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.8.0-beta4'
+    implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+    implementation group: 'ch.qos.logback', name: 'logback-core', version: '1.2.3'
+    testImplementation 'org.scalactic:scalactic_2.13:3.2.6'
+    testImplementation 'org.scalatest:scalatest_2.13:3.2.6'
+    testImplementation 'org.scalatest:scalatest-flatspec_2.13:3.2.6'
 }
 
 //java {

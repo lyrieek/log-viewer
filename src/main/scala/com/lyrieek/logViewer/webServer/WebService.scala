@@ -1,4 +1,4 @@
-package com.lyrieek.logViewer
+package com.lyrieek.logViewer.webServer
 
 import java.time.LocalDateTime
 

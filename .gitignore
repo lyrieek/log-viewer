@@ -1,6 +1,9 @@
+.bsp
 .gradle
 .idea
 
-gradle
 build
+gradle
 out
+target
+project
