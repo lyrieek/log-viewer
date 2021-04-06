@@ -11,6 +11,12 @@ class LogTest extends AnyFlatSpec {
 		val config: Configuration = new Configuration()
 		config.file("src/test/resources/setting.properties").read()
 		val logScan: LogScanner = new LogScanner(config)
+		logScan.filters += ((e: String) => {
+			if (!e.matches("[1000-9999].+")) {
+				print("\t")
+			}
+			e
+		})
 		logScan.read()
 	}
 

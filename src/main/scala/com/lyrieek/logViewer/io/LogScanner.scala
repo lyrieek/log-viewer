@@ -1,17 +1,33 @@
 package com.lyrieek.logViewer.io
 
 import java.io.{FileReader, IOException}
+import java.util
 
 import com.lyrieek.logViewer.config.Configuration
+import com.lyrieek.logViewer.filter.ScannerFilter
 import org.apache.commons.io.IOUtils
 
-class LogScanner(config: Configuration) extends App {
+import scala.collection.mutable.ArrayBuffer
+
+class LogScanner(config: Configuration) {
+
+	final val filters = new ArrayBuffer[ScannerFilter]()
+
+	private def readLines: util.List[String] = {
+		val reader = new FileReader(config.getSignleRestrictFile())
+		val res: util.List[String] = IOUtils.readLines(reader)
+		reader.close()
+		res
+	}
 
 	def read(): Unit = {
 		try {
-			val lines: java.util.List[String] = IOUtils.readLines(new FileReader(config.getSignleRestrictFile()))
-			lines.forEach(e => {
-				println(e)
+			readLines.forEach(e => {
+				var item = e
+				for (i <- 0 until filters.size)
+					item = filters(i).dispose(item)
+//				val a: Unit = filters.foreach(f => f.dispose(e))
+				println(item)
 			})
 		} catch {
 			case ex: IOException => println(ex)

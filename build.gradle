@@ -9,7 +9,7 @@ plugins {
 
 group "com.lyrieek"
 description "Log viewer in browser"
-version '0.0.2'//-SNAPSHOT
+version '0.0.3'//-SNAPSHOT
 
 sourceCompatibility = JavaVersion.VERSION_12
 targetCompatibility = JavaVersion.VERSION_12
