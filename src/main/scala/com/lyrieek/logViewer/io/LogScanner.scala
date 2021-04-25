@@ -20,14 +20,21 @@ class LogScanner(config: Configuration) {
 		res
 	}
 
-	def read(): Unit = {
+	def print(): Unit = {
+		try {
+			readLines.forEach(e => println(e))
+		} catch {
+			case ex: IOException => println(ex)
+		}
+	}
+
+	def each(fn: String => Unit): Unit = {
 		try {
 			readLines.forEach(e => {
 				var item = e
 				for (i <- 0 until filters.size)
 					item = filters(i).dispose(item)
-//				val a: Unit = filters.foreach(f => f.dispose(e))
-				println(item)
+				fn(item)
 			})
 		} catch {
 			case ex: IOException => println(ex)
