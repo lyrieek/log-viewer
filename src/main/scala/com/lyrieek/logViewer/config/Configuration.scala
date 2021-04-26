@@ -39,16 +39,16 @@ class Configuration {
 				if (value.toString.contains(",")) {
 					setting.put("restrictMode", "list")
 					setting.put(key, value.toString)
-					return
+				} else {
+					setting.put("restrictMode", "complete")
+					val index = value.toString.lastIndexOf(File.separator)
+					if (index == -1) {
+						logger.error("apply 'file' parameter failure! Put it in at least one folder")
+						return
+					}
+					setting.put("workPath", value.toString.substring(0, index))
+					setting.put("restrict", value.toString.substring(index + 1))
 				}
-				setting.put("restrictMode", "complete")
-				val index = value.toString.lastIndexOf(File.separator)
-				if (index == -1) {
-					logger.error("apply 'file' parameter failure! Put it in at least one folder")
-					return
-				}
-				setting.put("workPath", value.toString.substring(0, index))
-				setting.put("restrict", value.toString.substring(index + 1))
 			case "test" => println("println test parameter:" + value)
 			case _ =>
 				if (!key.startsWith("custom.")) {
