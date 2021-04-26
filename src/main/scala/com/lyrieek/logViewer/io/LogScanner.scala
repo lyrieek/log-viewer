@@ -13,8 +13,16 @@ class LogScanner(config: Configuration) {
 
 	final val filters = new ArrayBuffer[ScannerFilter]()
 
+	def files(): String = {
+		config.setting("workPath")
+	}
+
+	def workPath(): String = {
+		config.setting("workPath")
+	}
+
 	private def readLines: util.List[String] = {
-		val reader = new FileReader(config.getSignleRestrictFile())
+		val reader = new FileReader(config.getSingleRestrictFile)
 		val res: util.List[String] = IOUtils.readLines(reader)
 		reader.close()
 		res

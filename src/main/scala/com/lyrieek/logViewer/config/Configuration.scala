@@ -36,6 +36,11 @@ class Configuration {
 				setting.put("restrictMode", "regex")
 				setting.put(key, value.toString)
 			case "file" =>
+				if (value.toString.contains(",")) {
+					setting.put("restrictMode", "list")
+					setting.put(key, value.toString)
+					return
+				}
 				setting.put("restrictMode", "complete")
 				val index = value.toString.lastIndexOf(File.separator)
 				if (index == -1) {
@@ -56,7 +61,7 @@ class Configuration {
 		})
 	}
 
-	def getSignleRestrictFile(): String = {
+	def getSingleRestrictFile: String = {
 		setting("workPath") + File.separator + setting("restrict")
 	}
 
